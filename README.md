@@ -111,7 +111,7 @@ Toutes les routes exigent le jeton (`Authorization: Bearer <jeton>` ou `?token=<
 
 | Route | Rôle |
 |---|---|
-| `POST /overland` | Reçoit les lots d'Overland (`{"locations":[Feature GeoJSON…]}`), répond `{"result":"ok"}` |
+| `POST /overland` (ou tout chemin en POST) | Reçoit les lots d'Overland (`{"locations":[Feature GeoJSON…]}`), répond `{"result":"ok"}` |
 | `GET /points?since=<id>&limit=5000` | Points stockés après le curseur : `{"points":[[id, ts, lat, lon, précision, vitesse, activité]], "next", "more"}` |
 | `GET /status` | Test de connexion : nombre de points et date du dernier |
 
@@ -142,16 +142,19 @@ Le dédoublonnage est assuré par un index unique (appareil, horodatage).
 
 | Réglage Overland | Valeur | Pourquoi |
 |---|---|---|
-| Tracking | **On** | |
-| Desired Accuracy | **10m** | Assez précis pour distinguer deux rues ; « Best » consomme nettement plus |
+| Tracking Enabled | **On** | Le rond « Slide to unlock » se glisse vers la droite pour débloquer les réglages |
+| Continuous Tracking Mode | **Both** | iOS relance Overland dès que vous bougez |
+| Desired Accuracy | **10m** | Indispensable : à 100 m, les points sont trop imprécis et ignorés |
 | Activity Type | **Fitness** | Indique à iOS un déplacement à pied |
-| Pause Updates Automatically | **On** | iOS coupe le GPS quand vous êtes immobile (gros gain de batterie) |
-| Resume with Geofence | **100m** | Relance le suivi dès que vous repartez |
-| Significant Location | **Enabled** | Filet de sécurité si iOS a suspendu l'app |
+| Pause Updates Automatically | **No** | Le plus fiable pour ne rater aucune marche |
+| Logging Mode | **All Data** | |
+| Locations per Batch | **200** | Moins de requêtes réseau |
 | Min Time Between Points | **5s** | Un point toutes les 5 s suffit (l'app densifie entre les points) |
-| Min Distance Between Points | **5m** | Pas de points inutiles à l'arrêt |
-| Points per Batch | **200** | Moins de requêtes réseau |
-| Send Interval | **5m** | Envoi groupé : économise la batterie et le réseau |
+| Enable notifications | **On** | Prévient si le suivi s'arrête |
+| Send Interval (onglet Tracker) | **5m** | Envoi groupé : économise la batterie et le réseau |
+
+Location Authorization Status doit afficher **Always** : sinon touchez *Request Permission*, puis dans
+Réglages iOS → Overland → Position choisissez **Toujours** et **Position exacte**.
 
 Les libellés peuvent légèrement varier selon la version d'Overland ; l'esprit reste : précision ~10 m, pause automatique,
 envoi groupé. Sur une journée de marche, comptez environ 5 à 10 % de batterie.

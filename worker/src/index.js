@@ -30,7 +30,8 @@ export default {
     if (!checkToken(request, url, env.TOKEN)) return json({ error: 'Jeton invalide' }, 401, cors);
 
     try {
-      if (url.pathname === '/overland' && request.method === 'POST') return await receive(request, env, cors);
+      // Toute requête POST est un lot Overland, quel que soit le chemin saisi dans l'app.
+      if (request.method === 'POST') return await receive(request, env, cors);
       if (url.pathname === '/points' && request.method === 'GET') return await listPoints(url, env, cors);
       if (url.pathname === '/status' && request.method === 'GET') return await status(env, cors);
     } catch (e) {
