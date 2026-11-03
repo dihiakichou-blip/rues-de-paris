@@ -1,0 +1,21 @@
+# Configuration pour un déploiement en ligne de commande (facultatif :
+# le guide du README explique aussi comment tout faire depuis le tableau de bord).
+name = "rues-de-paris"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+
+[vars]
+# Pré-filtre côté serveur (lâche) : l'app applique ensuite le filtre strict
+# (précision ≤ 30 m, vitesse < 7 km/h). Ces valeurs évitent de stocker les trajets en voiture.
+MAX_ACCURACY_M = "60"
+MAX_SPEED_KMH = "15"
+# Origine autorisée pour la web app (ex. "https://moncompte.github.io"). "*" = toutes.
+ALLOWED_ORIGIN = "*"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "rues-de-paris"
+database_id = "REMPLACER_PAR_L_ID_DE_VOTRE_BASE"
+
+# Le jeton secret n'est jamais écrit ici :
+#   npx wrangler secret put TOKEN
