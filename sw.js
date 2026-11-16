@@ -1,6 +1,6 @@
 // Service worker : l'app et le fichier des rues fonctionnent hors ligne.
 // Incrémentez VERSION à chaque mise à jour du site pour forcer le rafraîchissement.
-const VERSION = 'v1';
+const VERSION = 'v2';
 const SHELL = [
   './', 'index.html', 'css/app.css', 'js/app.js', 'js/db.js', 'js/core.js', 'js/match.worker.js',
   'data/streets.json.gz', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/apple-touch-icon.png', 'icons/icon.svg',

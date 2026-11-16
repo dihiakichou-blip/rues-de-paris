@@ -530,7 +530,7 @@ async function exportBackup() {
   const file = new File([JSON.stringify(data)], name, { type: 'application/json' });
   if (navigator.canShare && navigator.canShare({ files: [file] })) {
     try {
-      await navigator.share({ files: [file], title: 'Sauvegarde Rues de Paris' });
+      await navigator.share({ files: [file], title: 'Sauvegarde Balade Freestyle' });
       return;
     } catch (e) {
       if (e.name === 'AbortError') return;
@@ -550,7 +550,7 @@ async function importBackup(file) {
   } catch {
     return toast('Ce fichier n’est pas une sauvegarde valide.');
   }
-  if (!data || data.app !== 'rues-de-paris' || !Array.isArray(data.points)) return toast('Ce fichier n’est pas une sauvegarde de Rues de Paris.');
+  if (!data || data.app !== 'rues-de-paris' || !Array.isArray(data.points)) return toast('Ce fichier n’est pas une sauvegarde de Balade Freestyle.');
   const pts = data.points.filter((p) => Array.isArray(p) && Number.isFinite(p[0]) && Number.isFinite(p[1]) && Number.isFinite(p[2]));
   const added = await addPoints(pts);
   if (data.cursor && !(await kv.get('cursor'))) await kv.set('cursor', data.cursor);
@@ -580,7 +580,7 @@ function renderInstallStep() {
     box.innerHTML = `<ol class="install-steps">
         <li>Touchez le bouton <b>Partager</b> ${share} dans la barre de Safari.</li>
         <li>Faites défiler et choisissez <b>« Sur l’écran d’accueil »</b>.</li>
-        <li>Touchez <b>Ajouter</b>, puis ouvrez <b>Rues de Paris</b> depuis son icône.</li>
+        <li>Touchez <b>Ajouter</b>, puis ouvrez <b>Balade Freestyle</b> depuis son icône.</li>
       </ol>
       <p class="muted small">Important : poursuivez ce guide <b>depuis l’icône</b> sur l’écran d’accueil. Sur iPhone, l’app installée a son propre stockage, séparé de Safari.</p>`;
     return;
